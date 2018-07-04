@@ -1,0 +1,27 @@
+version: '2'
+services:
+  db:
+    image: postgres:10.4
+    ports:
+      - 1233:5432
+    environment:
+      - POSTGRES_USER=coneptum
+      - POSTGRES_PASSWORD=coneptum
+      - POSTGRES_DB=jenkins_hw
+  django:
+    image: jenkins_hello_world
+    build: .
+    links:
+      - db:db
+    ports:
+      - 8020:8000
+    volumes:
+      - .:/code
+    stdin_open: True
+    tty: True
+  jenkins:
+    image: jenkins
+    ports:
+      - 1232:8080
+    volumes:
+      - /srv/docker/jenkins:/var/jenkins_home #sudo chown -R 1000:1000 /srv/docker/jenkins
