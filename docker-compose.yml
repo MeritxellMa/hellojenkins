@@ -25,3 +25,4 @@ services:
       - 1232:8080
     volumes:
       - /srv/docker/jenkins:/var/jenkins_home #sudo chown -R 1000:1000 /srv/docker/jenkins
+      - .:/var/jenkins_home/code
