@@ -6,7 +6,7 @@ node {
     if (!installed) {
         stage("Install Python Virtual Enviroment") {
            sh '''
-            PYENV_HOME=$WORKSPACE
+            PYENV_HOME=$WORKSPACE/..
             virtualenv --no-site-packages PYENV_HOME
            '''
         }
