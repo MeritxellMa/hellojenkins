@@ -13,7 +13,7 @@
 3. Create a 'Freestyle project'
 4. On 'Build Triggers' tab, check 'Build periodically' and add build periodicity by writing following CRON syntax
 5. Choose a 'Add build step'>'Execute Shell' on 'Build' tab and write the code to execute
-    - It is a good practice to use a virtualenv to run a Django project in Jenkins, to do so it is needed a virtualenv in $WORKSPACE
+    - It is a good practice to use a virtualenv to run a Django project in Jenkins, to do so it is needed a virtualenv in $WORKSPACE and installed its requirements
     - Example:
         ```bash
         #!/bin/bash
