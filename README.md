@@ -4,7 +4,7 @@
     docker-compose exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
     ```
 2. Go to http://0.0.0.0:1232/ and paste the result
-3. Install plugins default + 'ShiningPanda Plugin'
+3. Install plugins default
 4. Create admin user
 
 #### Create a Jenkins Django Periodic Job
@@ -12,10 +12,14 @@
 2. Click 'New item'
 3. Create a 'Freestyle project'
 4. On 'Build Triggers' tab, check 'Build periodically' and add build periodicity by writing following CRON syntax
-5. Choose a 'Add build step'>'Virtualenv Builder' on 'Build' tab and write the code to execute
-    - Remember to install requirements (only installed the first time unless destroy workspace options is checked)
+5. Choose a 'Add build step'>'Execute Shell' on 'Build' tab and write the code to execute
+    - It is a good practice to use a virtualenv to run a Django project in Jenkins, to do so it is needed a virtualenv in $WORKSPACE
     - Example:
-        ```python
+        ```bash
+        #!/bin/bash
+        cd ../../code
+        source env/bin/activate
+        PATH='env/bin'
         pip install -r requirements.txt
         python manage.py test
         ```
