@@ -24,5 +24,3 @@
 8. By clicking one of the premalinks in the dashboard you can see the console output or other features of the job
 9. In trend link there's analytic data about the job
 10. Next time your job will automatically execute at time you scheduled it
-
-#### Create Pipelines
