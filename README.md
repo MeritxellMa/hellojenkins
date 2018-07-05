@@ -4,7 +4,7 @@
     docker-compose exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
     ```
 2. Go to http://0.0.0.0:1232/ and paste the result
-3. Install plugins custom: install 'ShiningPanda Plugin'
+3. Install plugins default + 'ShiningPanda Plugin'
 4. Create admin user
 
 #### Create a Jenkins Django Periodic Job
