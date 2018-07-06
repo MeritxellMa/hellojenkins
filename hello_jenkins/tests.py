@@ -7,4 +7,4 @@ import random
 
 class RandomTest(unittest.TestCase):
     def test(self):
-        self.assertGreaterEqual(random.uniform(0, 1), 0.3)
+        self.assertGreaterEqual(random.uniform(0, 1), 0.1)

@@ -29,9 +29,10 @@
 
 #### Link Django project
 1. 'Manage Jenkins' > 'Manage Nodes'> 'New Node'
-2. Set node params and save
-    - Remember to have '.ssh/known_hosts' file in Jenkins home dir if you acces node through ssh
-    - Set your Django project path in 'Remote root directory'
+2. Set your Django project path in 'Remote root directory'
+3. Set other node params and save
+- Remember to have '.ssh/known_hosts' file in Jenkins home dir if you acces node through ssh
+
 ### Execute remote jobs from Jenkins container
 1. 'New Item' > 'Pipeline'
 2. In 'Build Triggers' tab set periodicity if needed with CRON syntax
