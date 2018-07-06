@@ -1,3 +1,23 @@
+#### Set up Jenkins as docker container
+1. Edit docker-compose.yml services to look like this:
+    ```
+    version 'X'
+    services:
+        ...
+        jenkins:
+            image: jenkins/jenkins:lts
+            volumes:
+              - /srv/docker/jenkins:/var/jenkins_home
+    ```
+2. Run set admin permissions to jenkins dir to avoid errors in ```docker-compose up```:
+    ```
+    sudo chown -R 1000:1000 /srv/docker/jenkins
+    ```
+3. Execute:
+    ```
+    docker-compose up
+    ```
+
 #### Set up Jenkins
 1. Run:
     ```
@@ -7,24 +27,43 @@
 3. Install plugins default
 4. Create admin user
 
-#### Create a Jenkins Django Periodic Job
-1. Log in to Jenkins
-2. Click 'New item'
-3. Create a 'Freestyle project'
-4. On 'Build Triggers' tab, check 'Build periodically' and add build periodicity by writing following CRON syntax
-5. Choose a 'Add build step'>'Execute Shell' on 'Build' tab and write the code to execute
-    - It is a good practice to use a virtualenv to run a Django project in Jenkins, to do so it is needed a virtualenv in $WORKSPACE and installed its requirements
-    - Example:
-        ```bash
-        #!/bin/bash
-        cd ../../code
-        source env/bin/activate
-        PATH='env/bin'
-        pip install -r requirements.txt
-        python manage.py test
-        ```
-6. Save build
-7. Check if build is correct clicking 'Build now' on left menu
-8. By clicking one of the premalinks in the dashboard you can see the console output or other features of the job
-9. In trend link there's analytic data about the job
-10. Next time your job will automatically execute at time you scheduled it
+#### Link Django project
+1. 'Manage Jenkins' > 'Manage Nodes'> 'New Node'
+2. Set node params and save
+    - Remember to have '.ssh/known_hosts' file in Jenkins home dir if you acces node through ssh
+    - Set your Django project path in 'Remote root directory'
+### Execute remote jobs from Jenkins container
+1. 'New Item' > 'Pipeline'
+2. In 'Build Triggers' tab set periodicity if needed with CRON syntax
+3. On 'Pipeline' tab write the pipeline script that executes the job in the node we've created as so:
+    ```
+    pipeline {
+        agent { label 'node_name' }
+        stages {
+            stage('name_of_stage') {
+                steps {
+                    ...
+                }
+            }
+        }
+    }
+    ```
+    Example on node named test execute python script:
+    ```
+    pipeline {
+        agent { label 'test' }
+        stages {
+            stage('Eurona test') {
+                steps {
+                    sh "python execute_token.py"
+                }
+            }
+        }
+    }
+    ```
+4. Save pipeline
+
+Also:
+- Is it possible to check if build is correct clicking 'Build now' on left menu
+- By clicking one of the premalinks in the dashboard you can see the console output or other features of the job
+- In trend link there's analytic data about the job
